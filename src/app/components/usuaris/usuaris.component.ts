@@ -198,8 +198,11 @@ export class UsuarisComponent implements OnInit {
       return;
     }
     const idx = this.pendingUpdateIndex;
+    
     this.userService.updateUser(this.pendingUpdateUser).subscribe(response => {
-      this.usuarios[idx] = { ...(response as User) };
+      this.usuarios[idx] = { ...(response as User)  };
+      console.log(idx, this.usuarios[idx]);
+      console.log('Usuario actualizado:', this.usuarios);
       this.closeUpdateModal();
       this.resetFormInternal();
       this.clampPage();
