@@ -55,7 +55,6 @@ export class AuthInterceptor implements HttpInterceptor {
               console.log('No se pudo refrescar el token, redirigiendo al login.', err);
               this.isRefreshing = false;
               this.authService.logout();
-              this.router.navigate(['/login']);
               return throwError(() => err);
             })
           );

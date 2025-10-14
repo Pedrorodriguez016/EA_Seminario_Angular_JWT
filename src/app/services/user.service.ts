@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { User } from '../models/user.model';
 
 
@@ -25,7 +25,15 @@ export class UserService {
 
   updateUser(user: User): Observable<User> {
     if (!user._id) throw new Error('Falta _id del usuario a actualizar');
-    return this.http.put<User>(`${this.apiUrl}/${user._id}`, user);
+    return this.http.put<User>(`${this.apiUrl}/${user._id}`, user).pipe(
+      tap(response => {
+        const userData = (response as any).user;
+        if (userData) {
+          localStorage.setItem('currentUser', JSON.stringify(userData));
+        }
+      }
+      )
+    );
   }
 
   deleteUserById(id: string): Observable<void> {
