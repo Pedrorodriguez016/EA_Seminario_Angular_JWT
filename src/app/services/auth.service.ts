@@ -81,9 +81,11 @@ export class AuthService {
   }
   refreshToken(): Observable<any> {
     const refreshToken = localStorage.getItem('refreshToken');
-    if (!refreshToken) {
-      throw new Error('No refresh token found');
+    const currentUser = localStorage.getItem('currentUser');
+    if (!refreshToken || !currentUser) {
+      throw new Error('No refresh token or current user found');
     }
-    return this.http.post(`${this.apiUrl}/user/refresh`, { refreshToken });
+    const user = JSON.parse(currentUser);
+    return this.http.post(`${this.apiUrl}/user/refresh`, { refreshToken, userId: user._id });
   }
 }
