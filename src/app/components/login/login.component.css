@@ -188,31 +188,6 @@
   transform: none;
 }
 
-.admin-section {
-  margin-top: 25px;
-  padding-top: 20px;
-  border-top: 1px solid #e5e7eb;
-  text-align: center;
-}
-
-.admin-button {
-  background: transparent;
-  color: #3b82f6;
-  border: 2px solid #3b82f6;
-  padding: 12px 24px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  font-family: inherit;
-}
-
-.admin-button:hover {
-  background: #3b82f6;
-  color: white;
-  transform: translateY(-2px);
-}
 
 .loading-spinner {
   display: inline-block;

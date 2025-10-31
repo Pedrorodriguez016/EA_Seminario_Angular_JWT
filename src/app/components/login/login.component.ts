@@ -54,23 +54,7 @@ export class LoginComponent  {
     }
   }
 
-  createAdmin(): void {
-    this.authService.createAdminUser().subscribe({
-      next: (response) => {
-        console.log('Admin creado:', response);
-        alert('Usuario admin creado exitosamente. Ahora puedes iniciar sesión con usuario: "admin" y contraseña: "admin"');
-        
-        this.loginForm.patchValue({
-          username: 'admin',
-          password: 'admin'
-        });
-      },
-      error: (error) => {
-        console.error('Error creando admin:', error);
-        this.errorMessage = 'Error creando usuario admin';
-      }
-    });
-  }
+
 
   private markFormGroupTouched(): void {
     Object.keys(this.loginForm.controls).forEach(key => {

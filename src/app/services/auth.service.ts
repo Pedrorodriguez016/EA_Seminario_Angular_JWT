@@ -72,10 +72,7 @@ export class AuthService {
     return !!this.currentUserSubject.value;
   }
 
-  // Método para crear admin (solo desarrollo)
-  createAdminUser(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/user/auth/create-admin`, {});
-  }
+ 
   getToken(): string | null {
     return localStorage.getItem('token');
   }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpResponse, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, throwError, catchError, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -31,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpResponse<any>) => {
         //Si el token expiró, intentamos refrescarlo
-        if ((error.status === 403 || error.status === 401) && !this.isRefreshing) {
+        if ((error.status === 401) && !this.isRefreshing) {
           console.log('Token expirado, intentando refrescar...');  
           this.isRefreshing = true;
 
@@ -52,14 +53,21 @@ export class AuthInterceptor implements HttpInterceptor {
               return next.handle(retryReq);
             }),
             catchError(err => {
+              if(err.status === 401){
               console.log('No se pudo refrescar el token, redirigiendo al login.', err);
               this.isRefreshing = false;
               this.authService.logout();
               return throwError(() => err);
+              }
+              return throwError(() => err);
+              
             })
           );
+          
         }
-
+         if (error.status === 403) {
+          console.warn('Acceso prohibido');
+        }
         return throwError(() => error);
       })
     );
